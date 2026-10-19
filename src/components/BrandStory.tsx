@@ -122,41 +122,54 @@ export const BrandStory: React.FC = () => {
           </div>
 
           {/* Right Column (55% / 7 cols): Scroll Storytelling Content & Pillars */}
-          <div className="lg:col-span-7 flex flex-col space-y-10">
-            {/* Story Paragraphs with Typography Transitions */}
+          <div className="lg:col-span-7 flex flex-col space-y-12">
+            {/* Story Paragraphs with Typography Transitions & Editorial Drop Cap */}
             <div className="space-y-6 text-[#544B47] text-base sm:text-lg font-light leading-relaxed">
-              {brandStoryContent.paragraphs.map((p, idx) => (
-                <TypographyReveal key={idx} delay={idx * 140} duration={850}>
+              <TypographyReveal delay={0} duration={850}>
+                <p className="first-letter:font-serif-editorial first-letter:text-5xl first-letter:float-left first-letter:mr-3.5 first-letter:text-[#9E5D52] first-letter:leading-[0.85] first-letter:font-normal">
+                  {brandStoryContent.paragraphs[0]}
+                </p>
+              </TypographyReveal>
+              {brandStoryContent.paragraphs.slice(1).map((p, idx) => (
+                <TypographyReveal key={idx + 1} delay={(idx + 1) * 140} duration={850}>
                   <p>{p}</p>
                 </TypographyReveal>
               ))}
             </div>
 
-            {/* Core Values & Pillars: Head & P Only */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 pt-8 border-t border-[#2A2523]/10">
-              {brandStoryContent.pillars.map((pillar, idx) => (
-                <div key={idx} className="space-y-2">
-                  <span className="text-[11px] font-mono text-[#C9968B] tracking-wider block">
-                    [{pillar.number}]
-                  </span>
-                  <h3 className="font-serif-editorial text-lg sm:text-xl text-[#2A2523] font-normal tracking-tight">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#544B47] font-light leading-relaxed">
-                    {pillar.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+            {/* 3 Mục Nội Dung Triết Lý: Feminine, Elegant, Artistic (Ít Chữ Nhất Có Thể) */}
+            <div className="pt-8 border-t border-[#2A2523]/10 space-y-3.5">
+              {brandStoryContent.pillars.map((pillar, idx) => {
+                const offsetStyles = [
+                  'sm:mr-6 bg-white/40 hover:bg-white/80 border-[#2A2523]/8 hover:border-[#C9968B]/50',
+                  'sm:ml-8 bg-white/70 hover:bg-white/95 border-[#C9968B]/30 hover:border-[#C9968B]/70 shadow-[0_8px_30px_rgba(201,150,139,0.06)]',
+                  'sm:ml-16 bg-white/40 hover:bg-white/80 border-[#2A2523]/8 hover:border-[#C9968B]/50',
+                ];
 
-            {/* Atelier Statement: Head & P */}
-            <div className="pt-6 border-t border-[#2A2523]/10 space-y-2">
-              <h3 className="font-serif-editorial text-xl sm:text-2xl text-[#2A2523] font-normal tracking-tight">
-                Nghệ Thuật Của Sự Tinh Tế
-              </h3>
-              <p className="text-sm sm:text-base text-[#544B47] font-light leading-relaxed">
-                Chúng tôi không chỉ bấm máy, mà cùng bạn kiến tạo những khung hình lưu giữ thanh xuân và chiều sâu cảm xúc theo năm tháng.
-              </p>
+                return (
+                  <div
+                    key={idx}
+                    className={`group relative p-5 sm:p-6 border transition-all duration-300 rounded-[2px] ${offsetStyles[idx]}`}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1.5 sm:gap-6">
+                      <div className="flex items-baseline gap-3 shrink-0">
+                        <span className="font-serif-editorial italic text-2xl sm:text-3xl text-[#C9968B] font-light leading-none group-hover:translate-x-1 transition-transform duration-300">
+                          {pillar.roman}.
+                        </span>
+                        <h3 className="font-serif-editorial text-xl sm:text-2xl text-[#2A2523] group-hover:text-[#9E5D52] font-normal tracking-tight transition-colors duration-300">
+                          {pillar.title}
+                        </h3>
+                      </div>
+                      <p className="text-xs sm:text-sm text-[#736862] font-light leading-relaxed sm:text-right">
+                        {pillar.description}
+                      </p>
+                    </div>
+
+                    {/* Subtle Rose Hairline Indicator on Hover */}
+                    <div className="absolute left-0 top-3 bottom-3 w-[2px] bg-[#C9968B] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

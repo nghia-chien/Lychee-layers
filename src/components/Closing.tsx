@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Calendar as CalendarIcon, ChevronDown } from 'lucide-react';
+import { format } from 'date-fns';
+import { vi } from 'date-fns/locale';
 import { studioInfo } from '../data/landingData.ts';
 import { TypographyReveal } from './ui/TypographyReveal.tsx';
 import { SilkDrift } from './ui/SilkDrift.tsx';
 import { SatinButton } from './ui/SatinButton.tsx';
 import { MagneticWrapper } from './ui/MagneticWrapper.tsx';
 import { DelicateLineDraw } from './ui/DelicateLineDraw.tsx';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover.tsx';
+import { Calendar } from './ui/calendar.tsx';
+import { cn } from '../lib/utils.ts';
 
 export const Closing: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -15,6 +21,9 @@ export const Closing: React.FC = () => {
     date: '',
     message: '',
   });
+
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -174,7 +183,17 @@ export const Closing: React.FC = () => {
                     Cảm ơn bạn đã gửi thông tin đến Lychee Layers Studio. Chuyên viên Art Director sẽ liên hệ qua điện thoại hoặc Zalo để cùng bạn phác thảo bộ ảnh độc bản.
                   </p>
                   <SatinButton
-                    onClick={() => setIsSuccess(false)}
+                    onClick={() => {
+                      setIsSuccess(false);
+                      setSelectedDate(undefined);
+                      setFormState({
+                        name: '',
+                        phone: '',
+                        concept: 'personal',
+                        date: '',
+                        message: '',
+                      });
+                    }}
                     variant="outline"
                     size="sm"
                   >
@@ -234,16 +253,58 @@ export const Closing: React.FC = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="date" className="block text-xs uppercase tracking-[0.16em] text-[#2A2523] mb-1.5 font-medium">
+                    <label htmlFor="booking-date" className="block text-xs uppercase tracking-[0.16em] text-[#2A2523] mb-1.5 font-medium">
                       Ngày Chụp Dự Kiến
                     </label>
-                    <input
-                      type="date"
-                      id="date"
-                      value={formState.date}
-                      onChange={(e) => setFormState({ ...formState, date: e.target.value })}
-                      className="w-full min-h-[46px] px-4 bg-[#FAF7F2] border border-[#2A2523]/15 text-xs text-[#2A2523] focus:outline-none focus:border-[#2A2523] focus:ring-1 focus:ring-[#2A2523]/20 focus:bg-white transition-all duration-200"
-                    />
+                    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                      <PopoverTrigger asChild>
+                        <button
+                          id="booking-date"
+                          type="button"
+                          className={cn(
+                            "w-full min-h-[46px] px-4 bg-[#FAF7F2] border border-[#2A2523]/15 text-xs text-[#2A2523] flex items-center justify-between text-left transition-all duration-200 cursor-pointer",
+                            "hover:border-[#2A2523]/40 focus:outline-none focus:border-[#2A2523] focus:ring-1 focus:ring-[#2A2523]/20 focus:bg-white",
+                            !selectedDate && "text-[#8A7E78]/70"
+                          )}
+                        >
+                          <span className="flex items-center gap-2.5 truncate">
+                            <CalendarIcon className="size-3.5 text-[#C9968B] shrink-0" />
+                            {selectedDate ? (
+                              <span className="text-[#2A2523] font-medium capitalize">
+                                {format(selectedDate, 'EEEE, dd/MM/yyyy', { locale: vi })}
+                              </span>
+                            ) : (
+                              <span>Chọn ngày chụp dự kiến</span>
+                            )}
+                          </span>
+                          <ChevronDown
+                            className={cn(
+                              "size-3.5 text-[#8A7E78] shrink-0 transition-transform duration-200",
+                              isCalendarOpen && "rotate-180 text-[#2A2523]"
+                            )}
+                          />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-auto p-0 border border-[#2A2523]/15 bg-[#FAF7F2] shadow-[0_20px_50px_rgba(42,37,35,0.14)]"
+                        align="start"
+                      >
+                        <Calendar
+                          mode="single"
+                          selected={selectedDate}
+                          onSelect={(date) => {
+                            setSelectedDate(date);
+                            setFormState((prev) => ({
+                              ...prev,
+                              date: date ? format(date, 'yyyy-MM-dd') : '',
+                            }));
+                            setIsCalendarOpen(false);
+                          }}
+                          locale={vi}
+                          disabled={{ before: new Date(new Date().setHours(0, 0, 0, 0)) }}
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
 
                   <div>

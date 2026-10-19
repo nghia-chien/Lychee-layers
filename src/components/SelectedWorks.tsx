@@ -189,11 +189,10 @@ export const SelectedWorks: React.FC = () => {
                   type="button"
                   disabled={activeIdx === 0}
                   onClick={() => scrollToCard(activeIdx - 1)}
-                  className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2523] ${
-                    activeIdx === 0
+                  className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2523] ${activeIdx === 0
                       ? 'border-[#2A2523]/10 text-[#2A2523]/30 cursor-not-allowed'
                       : 'border-[#2A2523]/25 text-[#2A2523] hover:border-[#2A2523] hover:bg-[#2A2523] hover:text-[#FAF7F2]'
-                  }`}
+                    }`}
                   aria-label="Xem khung hình trước"
                 >
                   ←
@@ -205,11 +204,10 @@ export const SelectedWorks: React.FC = () => {
                   type="button"
                   disabled={activeIdx === selectedWorksData.length - 1}
                   onClick={() => scrollToCard(activeIdx + 1)}
-                  className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2523] ${
-                    activeIdx === selectedWorksData.length - 1
+                  className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2523] ${activeIdx === selectedWorksData.length - 1
                       ? 'border-[#2A2523]/10 text-[#2A2523]/30 cursor-not-allowed'
                       : 'border-[#2A2523]/25 text-[#2A2523] hover:border-[#2A2523] hover:bg-[#2A2523] hover:text-[#FAF7F2]'
-                  }`}
+                    }`}
                   aria-label="Xem khung hình kế tiếp"
                 >
                   →
@@ -227,11 +225,10 @@ export const SelectedWorks: React.FC = () => {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUpOrLeave}
           onMouseLeave={handleMouseUpOrLeave}
-          className={`flex gap-8 overflow-x-auto pb-8 pt-4 scrollbar-none transition-all ${
-            isDragging
+          className={`flex gap-8 overflow-x-auto pb-8 pt-4 scrollbar-none transition-all ${isDragging
               ? 'cursor-grabbing select-none'
               : 'cursor-grab snap-x snap-mandatory'
-          }`}
+            }`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {selectedWorksData.map((item, index) => {
@@ -255,11 +252,10 @@ export const SelectedWorks: React.FC = () => {
                 className={`flex-none w-[280px] sm:w-[340px] md:w-[380px] snap-center transition-transform duration-500 ${verticalOffsets}`}
               >
                 <div
-                  className={`group bg-white p-3 sm:p-4 border transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isActive
+                  className={`group bg-white p-3 sm:p-4 border transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
                       ? 'border-[#2A2523]/35 shadow-[0_22px_48px_rgba(42,37,35,0.12)] -translate-y-1'
                       : 'border-[#2A2523]/8 opacity-85 hover:opacity-100 hover:border-[#C9968B] shadow-[0_10px_28px_rgba(42,37,35,0.05)]'
-                  }`}
+                    }`}
                 >
                   {/* Photo Frame with Mask Reveal & Parallax Depth */}
                   <div className="relative overflow-hidden aspect-[3/4] bg-[#ECE5DD] mb-4">
@@ -277,11 +273,10 @@ export const SelectedWorks: React.FC = () => {
                       />
                     </div>
                     <div
-                      className={`absolute top-2 left-2 px-2 py-0.5 text-[9px] uppercase tracking-[0.2em] transition-colors duration-300 ${
-                        isActive
+                      className={`absolute top-2 left-2 px-2 py-0.5 text-[9px] uppercase tracking-[0.2em] transition-colors duration-300 ${isActive
                           ? 'bg-[#2A2523] text-[#FAF7F2] font-medium'
                           : 'bg-[#FAF7F2]/90 backdrop-blur-xs text-[#2A2523]'
-                      }`}
+                        }`}
                     >
                       {item.category}
                     </div>
@@ -289,17 +284,15 @@ export const SelectedWorks: React.FC = () => {
 
                   {/* Caption & Editorial Metadata */}
                   <div
-                    className={`flex items-baseline justify-between pt-1 border-t transition-colors duration-300 ${
-                      isActive ? 'border-[#2A2523]/25' : 'border-[#2A2523]/6'
-                    }`}
+                    className={`flex items-baseline justify-between pt-1 border-t transition-colors duration-300 ${isActive ? 'border-[#2A2523]/25' : 'border-[#2A2523]/6'
+                      }`}
                   >
                     <div>
                       <h3
-                        className={`font-serif-editorial text-lg sm:text-xl transition-colors duration-200 ${
-                          isActive
+                        className={`font-serif-editorial text-lg sm:text-xl transition-colors duration-200 ${isActive
                             ? 'text-[#9E5D52]'
                             : 'text-[#2A2523] group-hover:text-[#9E5D52]'
-                        }`}
+                          }`}
                       >
                         {item.title}
                       </h3>
@@ -308,9 +301,8 @@ export const SelectedWorks: React.FC = () => {
                       </span>
                     </div>
                     <span
-                      className={`font-serif-editorial text-xs italic transition-colors duration-300 ${
-                        isActive ? 'text-[#9E5D52] font-semibold' : 'text-[#C9968B]'
-                      }`}
+                      className={`font-serif-editorial text-xs italic transition-colors duration-300 ${isActive ? 'text-[#9E5D52] font-semibold' : 'text-[#C9968B]'
+                        }`}
                     >
                       {item.year}
                     </span>
@@ -337,10 +329,6 @@ export const SelectedWorks: React.FC = () => {
               {String(selectedWorksData.length).padStart(2, '0')}
             </span>
           </div>
-
-          <span className="text-[11px] uppercase tracking-[0.2em] font-light hidden sm:inline-block">
-            Cuộn ngang hoặc kéo chuột để khám phá thước phim
-          </span>
         </div>
       </div>
     </section>

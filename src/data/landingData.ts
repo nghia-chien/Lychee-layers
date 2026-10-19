@@ -368,18 +368,21 @@ export const brandStoryContent = {
   pillars: [
     {
       number: "01",
+      roman: "I",
       title: "Cá Tính Độc Bản",
-      description: "May đo moodboard theo cá tính riêng, tôn vinh thần thái tự nhiên.",
+      description: "Tôn vinh vẻ đẹp nguyên bản của riêng bạn.",
     },
     {
       number: "02",
+      roman: "II",
       title: "Ánh Sáng Tạp Chí",
-      description: "Set up ánh sáng studio chuẩn editorial thời trang quốc tế.",
+      description: "Khắc họa chiều sâu điện ảnh chuẩn editorial.",
     },
     {
       number: "03",
+      roman: "III",
       title: "Đạo Diễn Cảm Xúc",
-      description: "Hướng dẫn tạo dáng mềm mại, tạo tâm lý thoải mái và tự tin tuyệt đối.",
+      description: "Dẫn dắt tạo dáng mềm mại, tự nhiên.",
     },
   ],
 };

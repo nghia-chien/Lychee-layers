@@ -17,7 +17,7 @@ export const TypographyReveal: React.FC<TypographyRevealProps> = ({
   className = '',
   textClassName = '',
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
 
@@ -38,46 +38,40 @@ export const TypographyReveal: React.FC<TypographyRevealProps> = ({
       return;
     }
 
-    const node = containerRef.current;
+    const node = outerRef.current;
     if (!node) return;
 
-    // 3. Initial Viewport Check (Above the fold / already in view on load or reload)
-    const rect = node.getBoundingClientRect();
-    const inInitialView = rect.top < window.innerHeight && rect.bottom > 0;
-    if (inInitialView) {
-      const initialTimer = setTimeout(() => setIsVisible(true), 40 + delay);
-      return () => clearTimeout(initialTimer);
-    }
-
-    // 4. Robust IntersectionObserver for below-the-fold content
-    // Triggers when the element comes within 40px of entering the viewport
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            setIsVisible(true);
+            timer = setTimeout(() => setIsVisible(true), delay);
             observer.disconnect();
             break;
           }
         }
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.05,
+        rootMargin: '80px 0px 80px 0px',
       }
     );
 
     observer.observe(node);
 
     return () => {
+      if (timer) clearTimeout(timer);
       observer.disconnect();
     };
   }, [delay]);
 
   return (
-    <Component className={`mask-reveal-container ${className}`}>
+    <Component
+      ref={outerRef as any}
+      className={`mask-reveal-container ${className}`}
+    >
       <div
-        ref={containerRef}
         className={`transition-all ${textClassName}`}
         style={{
           transform: isReducedMotion || isVisible ? 'translate3d(0, 0, 0)' : 'translate3d(0, 105%, 0)',
@@ -93,4 +87,3 @@ export const TypographyReveal: React.FC<TypographyRevealProps> = ({
     </Component>
   );
 };
-
