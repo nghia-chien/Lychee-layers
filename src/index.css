@@ -1,0 +1,349 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #FAF7F2;
+  --color-canvas-subtle: #F4EFEA;
+  --color-canvas-card: #FFFFFF;
+  --color-taupe: #2A2523;
+  --color-taupe-muted: #544B47;
+  --color-taupe-light: #8A7E78;
+  --color-blush: #F7E7E2;
+  --color-blush-dark: #EAC8BF;
+  --color-rose: #C9968B;
+  --color-rose-deep: #9E5D52;
+  --color-champagne: #C5A880;
+
+  --font-editorial: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  --ease-editorial-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-editorial-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-editorial-silk: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-editorial-damped: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --duration-micro: 220ms;
+  --duration-card: 650ms;
+  --duration-editorial: 950ms;
+  --duration-ambient: 1400ms;
+}
+
+:root {
+  --canvas: #FAF7F2;
+  --taupe: #2A2523;
+  --taupe-muted: #544B47;
+  --blush: #F7E7E2;
+  --rose: #C9968B;
+  --champagne: #C5A880;
+
+  /* Motion Tokens */
+  --ease-editorial-silk: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-editorial-damped: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-micro: 220ms;
+  --duration-card: 650ms;
+  --duration-editorial: 950ms;
+  --duration-ambient: 1400ms;
+  --stagger-tight: 40ms;
+  --stagger-natural: 70ms;
+  --stagger-spread: 120ms;
+  --parallax-subtle: 30px;
+  --parallax-medium: 65px;
+}
+
+body {
+  background-color: #FAF7F2;
+  color: #2A2523;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8CCC4;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A880;
+}
+
+/* Silk Drift Animation */
+@keyframes silkDrift {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+    opacity: 0.65;
+  }
+
+  33% {
+    transform: translate3d(3%, -2%, 0) scale(1.05);
+    opacity: 0.85;
+  }
+
+  66% {
+    transform: translate3d(-2%, 3%, 0) scale(1.02);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+    opacity: 0.65;
+  }
+}
+
+.animate-silk-drift {
+  animation: silkDrift 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform, opacity;
+}
+
+/* Satin Shimmer on Hover */
+@keyframes satinSweep {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+
+  100% {
+    transform: translateX(220%) skewX(-20deg);
+  }
+}
+
+.satin-button-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.28),
+      transparent);
+  transform: translateX(-120%) skewX(-20deg);
+  pointer-events: none;
+}
+
+.group:hover .satin-button-shimmer {
+  animation: satinSweep 0.85s var(--ease-editorial-out) forwards;
+}
+
+/* Emil Kowalski Button Active State */
+button:active,
+a:active,
+.interactive-press:active {
+  transform: scale(0.97);
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Editorial Typography */
+.font-serif-editorial {
+  font-family: var(--font-editorial);
+}
+
+.font-script {
+  font-family: "Caveat", "Brush Script MT", cursive;
+}
+
+/* Silk Ribbon Float Animation */
+@keyframes silkFloat {
+  0% {
+    transform: translate3d(0%, 0%, 0) rotate(0deg);
+  }
+
+  33% {
+    transform: translate3d(12px, -8px, 0) rotate(0.5deg);
+  }
+
+  66% {
+    transform: translate3d(-8px, 6px, 0) rotate(-0.4deg);
+  }
+
+  100% {
+    transform: translate3d(0%, 0%, 0) rotate(0deg);
+  }
+}
+
+.animate-silk-float {
+  animation: silkFloat 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform;
+}
+
+/* Continuous Flowing Silk Ribbon from Right to Left ("như nối tiếp nhau từ phải sang trái") */
+@keyframes silkStreamLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes silkUndulate {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(0.4deg);
+  }
+}
+
+.animate-silk-stream-left {
+  display: flex;
+  width: max-content;
+  animation: silkStreamLeft 22s linear infinite;
+  will-change: transform;
+}
+
+.animate-silk-undulate {
+  animation: silkUndulate 7.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Mask Reveal Utilities */
+.mask-reveal-container {
+  overflow: hidden;
+  display: block;
+}
+
+/* Emil Kowalski Modal Animation: never animate from scale(0), use scale(0.96) with opacity */
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Infinite Marquee running right to left */
+@keyframes marqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marqueeLeft 28s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-left:hover {
+  animation-play-state: paused;
+}
+
+/* Subtle Editorial Floating Levitation for Concept Cards */
+@keyframes conceptFloat0 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes conceptFloat1 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes conceptFloat2 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes conceptFloat3 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3.5px); }
+}
+@keyframes conceptFloat4 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4.5px); }
+}
+
+.animate-concept-levitate-0 {
+  animation: conceptFloat0 7.2s ease-in-out infinite;
+  will-change: transform;
+}
+.animate-concept-levitate-1 {
+  animation: conceptFloat1 8.6s ease-in-out infinite 0.8s;
+  will-change: transform;
+}
+.animate-concept-levitate-2 {
+  animation: conceptFloat2 6.8s ease-in-out infinite 1.4s;
+  will-change: transform;
+}
+.animate-concept-levitate-3 {
+  animation: conceptFloat3 8.0s ease-in-out infinite 0.4s;
+  will-change: transform;
+}
+.animate-concept-levitate-4 {
+  animation: conceptFloat4 7.6s ease-in-out infinite 1.8s;
+  will-change: transform;
+}
+
+/* Delicate Satin Shimmer for Featured Package Card */
+@keyframes packageSatinSweep {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+.package-satin-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.group-featured:hover .package-satin-shimmer {
+  animation: packageSatinSweep 1.15s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-silk-drift,
+  .animate-silk-float,
+  .animate-silk-stream-left,
+  .animate-silk-undulate,
+  .animate-marquee-left,
+  .animate-concept-levitate-0,
+  .animate-concept-levitate-1,
+  .animate-concept-levitate-2,
+  .animate-concept-levitate-3,
+  .animate-concept-levitate-4,
+  .package-satin-shimmer {
+    animation: none !important;
+  }
+}
