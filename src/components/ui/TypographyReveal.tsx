@@ -41,6 +41,13 @@ export const TypographyReveal: React.FC<TypographyRevealProps> = ({
     const node = outerRef.current;
     if (!node) return;
 
+    // Initial viewport check: reveal immediately if already in view
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setIsVisible(true);
+      return;
+    }
+
     let timer: ReturnType<typeof setTimeout> | undefined;
     const observer = new IntersectionObserver(
       (entries) => {

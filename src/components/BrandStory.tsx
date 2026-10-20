@@ -15,6 +15,16 @@ export const BrandStory: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const detailImageParallaxRef = useRef<HTMLDivElement>(null);
   const mainImageParallaxRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {
+        // Autoplay policy fallback
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -81,22 +91,46 @@ export const BrandStory: React.FC = () => {
         </div>
 
         {/* 45/55 Editorial Desktop Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column (45% / 5 cols): Restrained Sticky Image Frame */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28">
+          <div className="lg:col-span-5">
             <div className="relative">
-              {/* Primary Story Photo with Image Reveal */}
+              {/* Primary Story Video with Editorial Frame */}
               <div
                 ref={mainImageParallaxRef}
                 className="shadow-[0_20px_50px_rgba(42,37,35,0.08)] bg-white p-3 border border-[#2A2523]/8 will-change-transform"
               >
-                <ImageReveal
-                  src={brandStoryContent.mainImage}
-                  alt="Lychee Layers Brand Story Portrait"
-                  aspectRatio="aspect-[4/5]"
-                />
+                <div className="relative overflow-hidden bg-[#ECE5DD] aspect-[4/5] group">
+                  {/* Editorial delicate border frame */}
+                  <div
+                    className="absolute inset-0 pointer-events-none z-10 border border-[#2A2523]/10"
+                    aria-hidden="true"
+                  />
+
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    disablePictureInPicture
+                    className="w-full h-full object-cover object-center will-change-transform transition-transform duration-700 group-hover:scale-[1.02]"
+                  >
+                    <source src={brandStoryContent.video || '/v1.mp4'} type="video/mp4" />
+                    <source src="/video/v1.mp4" type="video/mp4" />
+                    Trình duyệt không hỗ trợ phát video.
+                  </video>
+
+                  {/* Subtle Studio Editorial Badge */}
+                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white text-[9px] tracking-[0.18em] uppercase font-light">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E5B5AB] animate-pulse" />
+                    <span>Film Reel</span>
+                  </div>
+                </div>
+
                 <div className="pt-3 px-1 flex items-center justify-between text-[#8A7E78] text-[10px] tracking-[0.2em] uppercase">
-                  <span>Fig. 01 — Essence</span>
+                  <span>Fig. 01 — Behind The Lens</span>
                   <span>Lychee Layers Studio</span>
                 </div>
               </div>
@@ -121,55 +155,15 @@ export const BrandStory: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column (55% / 7 cols): Scroll Storytelling Content & Pillars */}
-          <div className="lg:col-span-7 flex flex-col space-y-12">
-            {/* Story Paragraphs with Typography Transitions & Editorial Drop Cap */}
-            <div className="space-y-6 text-[#544B47] text-base sm:text-lg font-light leading-relaxed">
-              <TypographyReveal delay={0} duration={850}>
-                <p className="first-letter:font-serif-editorial first-letter:text-5xl first-letter:float-left first-letter:mr-3.5 first-letter:text-[#9E5D52] first-letter:leading-[0.85] first-letter:font-normal">
-                  {brandStoryContent.paragraphs[0]}
-                </p>
-              </TypographyReveal>
-              {brandStoryContent.paragraphs.slice(1).map((p, idx) => (
-                <TypographyReveal key={idx + 1} delay={(idx + 1) * 140} duration={850}>
+          {/* Right Column (55% / 7 cols): Vertically Centered Storytelling */}
+          <div className="lg:col-span-7 flex flex-col justify-center lg:self-center my-auto space-y-8">
+            {/* Story Paragraphs with Typography Transitions & Editorial Styling */}
+            <div className="space-y-6 text-[#544B47] text-base sm:text-lg lg:text-xl font-light leading-relaxed">
+              {brandStoryContent.paragraphs.map((p, idx) => (
+                <TypographyReveal key={idx} delay={idx * 140} duration={850}>
                   <p>{p}</p>
                 </TypographyReveal>
               ))}
-            </div>
-
-            {/* 3 Mục Nội Dung Triết Lý: Feminine, Elegant, Artistic (Ít Chữ Nhất Có Thể) */}
-            <div className="pt-8 border-t border-[#2A2523]/10 space-y-3.5">
-              {brandStoryContent.pillars.map((pillar, idx) => {
-                const offsetStyles = [
-                  'sm:mr-6 bg-white/40 hover:bg-white/80 border-[#2A2523]/8 hover:border-[#C9968B]/50',
-                  'sm:ml-8 bg-white/70 hover:bg-white/95 border-[#C9968B]/30 hover:border-[#C9968B]/70 shadow-[0_8px_30px_rgba(201,150,139,0.06)]',
-                  'sm:ml-16 bg-white/40 hover:bg-white/80 border-[#2A2523]/8 hover:border-[#C9968B]/50',
-                ];
-
-                return (
-                  <div
-                    key={idx}
-                    className={`group relative p-5 sm:p-6 border transition-all duration-300 rounded-[2px] ${offsetStyles[idx]}`}
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1.5 sm:gap-6">
-                      <div className="flex items-baseline gap-3 shrink-0">
-                        <span className="font-serif-editorial italic text-2xl sm:text-3xl text-[#C9968B] font-light leading-none group-hover:translate-x-1 transition-transform duration-300">
-                          {pillar.roman}.
-                        </span>
-                        <h3 className="font-serif-editorial text-xl sm:text-2xl text-[#2A2523] group-hover:text-[#9E5D52] font-normal tracking-tight transition-colors duration-300">
-                          {pillar.title}
-                        </h3>
-                      </div>
-                      <p className="text-xs sm:text-sm text-[#736862] font-light leading-relaxed sm:text-right">
-                        {pillar.description}
-                      </p>
-                    </div>
-
-                    {/* Subtle Rose Hairline Indicator on Hover */}
-                    <div className="absolute left-0 top-3 bottom-3 w-[2px] bg-[#C9968B] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                );
-              })}
             </div>
           </div>
         </div>

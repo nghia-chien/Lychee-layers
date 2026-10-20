@@ -212,7 +212,7 @@ export const Closing: React.FC = () => {
                       required
                       value={formState.name}
                       onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      placeholder="Nguyễn Phương Thảo"
+                      placeholder="Tên"
                       className="w-full min-h-[46px] px-4 bg-[#FAF7F2] border border-[#2A2523]/15 text-xs text-[#2A2523] placeholder:text-[#8A7E78]/60 focus:outline-none focus:border-[#2A2523] focus:ring-1 focus:ring-[#2A2523]/20 focus:bg-white transition-all duration-200"
                     />
                   </div>
@@ -228,7 +228,7 @@ export const Closing: React.FC = () => {
                         required
                         value={formState.phone}
                         onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                        placeholder="0912 345 678"
+                        placeholder="SĐT"
                         className="w-full min-h-[46px] px-4 bg-[#FAF7F2] border border-[#2A2523]/15 text-xs text-[#2A2523] placeholder:text-[#8A7E78]/60 focus:outline-none focus:border-[#2A2523] focus:ring-1 focus:ring-[#2A2523]/20 focus:bg-white transition-all duration-200"
                       />
                     </div>

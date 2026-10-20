@@ -118,9 +118,9 @@ export const studioInfo: StudioInfo = {
   closingHeadline2: "Để mỗi khung hình kể câu chuyện của riêng bạn.",
   closingDescription:
     "Hãy để Lychee Layers đồng hành cùng bạn tạo nên những khung hình vượt thời gian. Đặt lịch tư vấn moodboard và concept cùng Giám đốc nghệ thuật ngay hôm nay.",
-  addressNotice: "Studio tại Hà Nội [Địa chỉ cụ thể đang chờ studio xác nhận]",
+  addressNotice: "Chung cư Ecogreen, block i, 39B Đường Nguyễn Văn Linh, Tân Thuận, Hồ Chí Minh, Việt Nam",
   instagramHandle: "@lycheelayers.studio",
-  hotlineNotice: "Liên hệ Hotline / Zalo đặt lịch: [Đang chờ studio cung cấp]",
+  hotlineNotice: "0978 856 063",
   workingHours: "09:00 — 21:00 (Làm việc theo lịch hẹn)",
 };
 
@@ -364,6 +364,7 @@ export const brandStoryContent = {
   quote:
     "“Không rập khuôn, không công thức. Mỗi khuôn hình là một bản phối của ánh sáng satin và cảm xúc chân thật.”",
   mainImage: "/827830945_17991450459061701_4056127659587889330_n.jpg",
+  video: "/v1.mp4",
   detailImage: "/766317124_17983487592061701_4439795435283454152_n.jpg",
   pillars: [
     {
